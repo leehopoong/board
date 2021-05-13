@@ -42,8 +42,8 @@ public class FreeBoardController {
 		int rowcount = freeBoardService.listCount(map1);
 		int pagesize = 10;
 		int page = 1;
-		int startrow = ((page - 1) * pagesize);
-		int endrow = (startrow + pagesize) ;
+		int startrow = ((page - 1) * pagesize)+1;
+		int endrow = (startrow + pagesize) -1 ;
 		int absPage = 1;
 		if (rowcount % pagesize == 0) {
 			absPage = 0;
@@ -60,9 +60,12 @@ public class FreeBoardController {
 //		map.put("rowcount",rowcount);
 //		map.put("pages",pages);
 		List<FreeBoardDto> list = freeBoardService.freeBoardList(map);
-
+		List<Map<String, Object>> commCdMap1 = freeBoardService.CommCdList1();
+		List<Map<String, Object>> commCdMap2 = freeBoardService.CommCdList2();
 		mav.setViewName("boardMain");
 		mav.addObject("freeBoardList",list);
+		mav.addObject("commCdMap1",commCdMap1);
+		mav.addObject("commCdMap2",commCdMap2);
 		mav.addObject("rowcount",rowcount);
 		mav.addObject("pages",pages);
 		
@@ -74,8 +77,12 @@ public class FreeBoardController {
 		
 
 	@RequestMapping("/freeBoardInsert.ino")
-	public String freeBoardInsert(){
-		return "freeBoardInsert";
+	public ModelAndView freeBoardInsert(){
+		ModelAndView mav = new ModelAndView();
+		List<Map<String, Object>> commCdMap1 = freeBoardService.CommCdList1();
+		mav.setViewName("freeBoardInsert");
+		mav.addObject("commCdMap1",commCdMap1);
+		return mav;
 	}
 
 	@RequestMapping("/freeBoardInsertPro.ino")
@@ -91,8 +98,13 @@ public class FreeBoardController {
 
 	@RequestMapping("/freeBoardDetail.ino")
 	public ModelAndView freeBoardDetail(HttpServletRequest request,Model model,int num){
+		ModelAndView mav = new ModelAndView();
 		FreeBoardDto FreeBoardDto = freeBoardService.getDetailByNum(num);
-		return new ModelAndView("freeBoardDetail", "FreeBoardDto",FreeBoardDto);
+		List<Map<String, Object>> commCdMap1 = freeBoardService.CommCdList1();
+		mav.setViewName("freeBoardDetail");
+		mav.addObject("FreeBoardDto",FreeBoardDto);
+		mav.addObject("commCdMap1",commCdMap1);
+		return mav;
 	}
 
 	@RequestMapping("/freeBoardModify.ino")
@@ -117,8 +129,8 @@ public class FreeBoardController {
 			@RequestParam Map<String,Object> map,@RequestParam int page){
 		int rowcount = freeBoardService.listCount(map);
 		int pagesize = 10;
-		int startrow = ((page -1)* pagesize) ; 
-		int endrow = (startrow + pagesize);
+		int startrow = ((page -1)* pagesize) +1; 
+		int endrow = (startrow + pagesize) -1;
 		int absPage = 1;
 		if (rowcount % pagesize == 0) {
 			absPage = 0;

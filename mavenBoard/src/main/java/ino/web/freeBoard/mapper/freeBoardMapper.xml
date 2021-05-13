@@ -9,28 +9,35 @@
 	<select id="freeBoardGetList" resultType="freeBoardDto" parameterType ="map" > <!-- resultType="ino.web.board.dto.BoardDto" -->
 		SELECT *
 		FROM (SELECT CODE_TYPE, NUM, NAME, TITLE, CONTENT, TO_CHAR(REGDATE , 'YYYY/MM/DD') AS REGDATE,
-		case when CODE_TYPE = '01' THEN '자유'
-		when CODE_TYPE = '02' THEN '익명'
-		ELSE 'qna' END AS codeType,ROW_NUMBER() OVER(ORDER BY NUM DESC) AS RNUM
-		         FROM FREEBOARD )WHERE RNUM BETWEEN #{startrow} AND #{endrow}
+		(SELECT 
+            B.CODE_NAME 
+        FROM CODEM A , CODED B 
+        WHERE A.GR_CODE = B.GR_CODE
+        AND B.CODE = C.CODE_TYPE
+        AND A.GR_CODE = 'GR001'
+        AND A.USE_YN = 'Y'
+		AND B.USE_YN = 'Y') AS codeType,ROW_NUMBER() OVER(ORDER BY NUM DESC) AS RNUM
+         FROM FREEBOARD C
 		<if test="optionvalues == 1">
-   		AND CODE_TYPE = #{codeType} 
+   		WHERE CODE_TYPE = #{codeType}
   		</if>
   		<if test="optionvalues == 2">
-   		AND name = #{name}
+   		WHERE name = #{name}
   		</if>
   		<if test="optionvalues == 3">
-   		AND  title = #{title}
+   		WHERE  title = #{title}
   		</if>
   		<if test="optionvalues == 4">
-   		 AND content = #{content} 
+   		WHERE content = #{content} 
   		</if>
   		<if test="optionvalues == 5">
-   		AND  NUM = #{num}
+   		WHERE  NUM = #{num}
   		</if>
   		<if test="optionvalues == 6">
-   		AND TO_CHAR(REGDATE,'YYYYMMDD')  BETWEEN #{regdate} AND #{regdate2}
+   		WHERE TO_CHAR(REGDATE,'YYYYMMDD')  BETWEEN #{regdate} AND #{regdate2}
   		</if>
+  		 )WHERE RNUM BETWEEN #{startrow} AND #{endrow}
+		
   	
   		order by NUM DESC
   	</select>
@@ -57,6 +64,7 @@
   		<if test="optionvalues == 6">
    		AND TO_CHAR(REGDATE,'YYYYMMDD')  BETWEEN #{regdate} AND #{regdate2}
   		</if>
+  		
   	</select>
 
 	
@@ -100,6 +108,20 @@
 		#{num}
 	</foreach>
 	</update>
-
+	
+	<select id="commonCdList1" resultType="Map">
+		SELECT B.CODE,B.CODE_NAME FROM CODEM A, CODED B
+		WHERE a.gr_code = B.gr_code
+		AND A.USE_YN = 'Y'
+		AND B.USE_YN = 'Y'
+		AND A.GR_CODE = 'GR001'
+	</select>
+	<select id="commonCdList2" resultType="Map">
+		SELECT B.CODE,B.CODE_NAME FROM CODEM A, CODED B
+		WHERE a.gr_code = B.gr_code
+		AND A.USE_YN = 'Y'
+		AND B.USE_YN = 'Y'
+		AND A.GR_CODE = 'GR002'
+	</select>
 
 </mapper>

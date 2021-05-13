@@ -105,9 +105,9 @@ window.onload = function(){
 					<td style="width: 150px;" align="center">타입 :</td>
 					<td style="width: 400px;">
 						<select >
-							<option  value="01"<c:if test = "${FreeBoardDto.codeType eq 01}">selected</c:if>>자유</option>
-							<option  value="02"<c:if test = "${FreeBoardDto.codeType eq 02}">selected</c:if>>익명</option>
-							<option  value="03"<c:if test = "${FreeBoardDto.codeType eq 03}">selected</c:if>>QnA</option>
+							<c:forEach items="${commCdMap1 }" var="dto">
+								<option value="${dto.CODE }" <c:if test = "${FreeBoardDto.codeType eq dto.CODE }">selected</c:if>>${dto.CODE_NAME }</option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>

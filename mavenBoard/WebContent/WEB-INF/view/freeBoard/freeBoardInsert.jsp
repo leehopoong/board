@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -65,6 +66,7 @@ window.onload = function(){
 </script > 
 </head>
 <body>
+
 	<div>
 		<h1>자유게시판</h1>
 	</div>
@@ -74,16 +76,15 @@ window.onload = function(){
 	<hr style="width: 600px">
 
 	<form id = "freeBoardinsertprofrom" name ="freeBoardinsertprofrom" onsubmit="return false;">
-
 		<table border="1">
 			<tbody>
 				<tr>
 					<td style="width: 150px;" align="center">타입 :</td>
 					<td style="width: 400px;">
 						<select name = "codeType" id = "codeType">
-							<option value="01">자유</option>
-							<option value="02">익명</option>
-							<option value="03">QnA</option>
+							<c:forEach items="${commCdMap1 }" var="dto">
+								<option value="${dto.CODE }">${dto.CODE_NAME }</option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>

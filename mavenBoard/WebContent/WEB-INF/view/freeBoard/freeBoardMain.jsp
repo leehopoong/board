@@ -29,7 +29,7 @@
 			$('#optioninput5').val('').hide().attr("disabled", true);
 			$('#optioninput6').val('').hide().attr("disabled", true);
 			$('#optioninput7').val('').hide().attr("disabled", true);
-			$('#optioninput1').val('').hide().attr("disabled", true);
+			$('#optioninput1').val('01').hide().attr("disabled", true);
 		}
 		else if (result == '2') {
 			$('#optioninput2').val('').show().attr("disabled", false);
@@ -275,36 +275,23 @@
 </head>
 <body>
 	<form id="mainino" name="mainino">
-	
 		<div>
 			<h1>자유게시판</h1>
-			
 		</div>
 		<div>
 			<select name = "optionvalues" id="optionvalue" onChange="selectbox(this.value);">
 				<option value="0" selected="selected">전체</option>
-				<option value="1">타입</option>
-				<!-- selectBox -->
-				<option value="2">글쓴이</option>
-				<!-- input -->
-				<option value="3">글제목</option>
-				<!-- input -->
-				<option value="4">글내용</option>
-				<!-- input -->
-				<option value="5">글번호</option>
-				<!-- input 숫자만입력가능하게 체크-->
-				<option value="6">기간</option>
-				<!-- input input 숫자만 입력가능하게 20210101 -->
+				<c:forEach items="${commCdMap2 }" var="dto">
+					<option value="${dto.CODE }">${dto.CODE_NAME }</option>
+				</c:forEach>
+				
 			</select>
 			<input type="text" id="optioninput0">
 			<select name = "codeType" id="optioninput1" style = "display:none">
-				<option value="00" selected="selected">전체</option>
-				<option value="01">자유</option>
-				<!-- selectBox -->
-				<option value="02">익명</option>
-				<!-- input -->
-				<option value="03">qna</option>
-				<!-- input -->
+				
+				<c:forEach items="${commCdMap1 }" var="dto">
+					<option value="${dto.CODE }">${dto.CODE_NAME }</option>
+				</c:forEach>
 
 			</select>
 			<input type="text" name = "name" id="optioninput2" style = "display:none">

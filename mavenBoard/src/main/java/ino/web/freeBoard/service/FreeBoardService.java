@@ -87,8 +87,29 @@ public class FreeBoardService {
 				map.put("result", "false");
 			}
 		return map;
+	}
+	
+	public List<Map<String,Object>> CommCdList1 () {
+//		Map<String,Object> map = new HashMap<>();
 		
+//		List<Map<String,Object>> Commcd1=sqlSessionTemplate.selectList("commonCdList1");
+		return sqlSessionTemplate.selectList("commonCdList1");
+//		map.put("commCd1", Commcd1);
+//		map.put("Commcd2", Commcd2);
+//	return map;
+	
 
+}
+	public List<Map<String,Object>> CommCdList2 () {
+//		Map<String,Object> map = new HashMap<>();
+		
+		return sqlSessionTemplate.selectList("commonCdList2");
+//		List<Map<String,Object>> Commcd2 =sqlSessionTemplate.selectList("commonCdList2");
+//		map.put("commCd1", Commcd1);
+////		map.put("Commcd2", Commcd2);
+//		return map;
+		
+		
 	}
 
 }
